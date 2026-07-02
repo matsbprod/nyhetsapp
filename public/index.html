@@ -221,6 +221,8 @@
 
   function renderReaderTip() {
     const ua = navigator.userAgent;
+    const isEdge = /edg\//i.test(ua);
+    const isChrome = /chrome/i.test(ua) && !isEdge;
     const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
     const isFirefox = /firefox/i.test(ua);
     const tip = document.getElementById('reader-tip');
@@ -229,6 +231,8 @@
       tip.innerHTML = '📖 Länkarna öppnas automatiskt i Firefox läsläge – inga annonser eller rörig layout.';
     } else if (isSafari) {
       tip.innerHTML = '📖 Tips: gör det automatiskt genom att gå till Safari → Inställningar → Webbplatser → Läsläge, och sätt dn.se, svd.se och gp.se till "På". Eller tryck <kbd>⇧</kbd> <kbd>⌘</kbd> <kbd>R</kbd> manuellt på en öppnad artikel.';
+    } else if (isChrome || isEdge) {
+      tip.innerHTML = '📖 Tips: högerklicka på en öppnad artikel och välj "Öppna i läsläge" för att slippa annonser. Pinna ikonen i verktygsfältet (Fler verktyg → Läsläge → nåla fast) för snabbare åtkomst nästa gång.';
     } else {
       tip.innerHTML = '📖 Tips: många webbläsare har ett inbyggt läsläge (leta efter en ikon i adressfältet) som tar bort annonser när du öppnat en artikel.';
     }
