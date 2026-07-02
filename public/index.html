@@ -165,6 +165,14 @@
     } catch { return d; }
   }
 
+  function readerLink(url) {
+    const isFirefox = /firefox/i.test(navigator.userAgent);
+    if (isFirefox) {
+      return 'about:reader?url=' + encodeURIComponent(url);
+    }
+    return url;
+  }
+
   function renderList() {
     const active = new Set(activeCategories());
     const filtered = allItems.filter(i => active.has(i.category));
@@ -181,7 +189,7 @@
     status.style.display = 'none';
     list.innerHTML = filtered.map(i => `
       <div class="item">
-        <a href="${i.link}" target="_blank" rel="noopener">
+        <a href="${readerLink(i.link)}" target="_blank" rel="noopener">
           <h2>${i.title}</h2>
         </a>
         <p>${i.description}</p>
@@ -217,10 +225,10 @@
     const isFirefox = /firefox/i.test(ua);
     const tip = document.getElementById('reader-tip');
 
-    if (isSafari) {
-      tip.innerHTML = '📖 Tips: när du öppnat en artikel, tryck <kbd>⇧</kbd> <kbd>⌘</kbd> <kbd>R</kbd> för Safaris läsläge – slipper annonser och rörig layout.';
-    } else if (isFirefox) {
-      tip.innerHTML = '📖 Tips: när du öppnat en artikel, klicka bok-ikonen i adressfältet för Firefox läsvy – slipper annonser och rörig layout.';
+    if (isFirefox) {
+      tip.innerHTML = '📖 Länkarna öppnas automatiskt i Firefox läsläge – inga annonser eller rörig layout.';
+    } else if (isSafari) {
+      tip.innerHTML = '📖 Tips: gör det automatiskt genom att gå till Safari → Inställningar → Webbplatser → Läsläge, och sätt dn.se, svd.se och gp.se till "På". Eller tryck <kbd>⇧</kbd> <kbd>⌘</kbd> <kbd>R</kbd> manuellt på en öppnad artikel.';
     } else {
       tip.innerHTML = '📖 Tips: många webbläsare har ett inbyggt läsläge (leta efter en ikon i adressfältet) som tar bort annonser när du öppnat en artikel.';
     }
