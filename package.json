@@ -1,0 +1,8 @@
+{
+  "name": "personligt-nyhetsflode",
+  "version": "1.0.0",
+  "description": "Aggregerar och filtrerar nyheter från DN, SvD och GP baserat på kategori.",
+  "dependencies": {
+    "fast-xml-parser": "^4.5.0"
+  }
+}
