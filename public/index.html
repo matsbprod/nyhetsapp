@@ -93,6 +93,22 @@
     color: var(--muted);
     padding: 2rem 0;
   }
+  .reader-tip {
+    font-size: 0.82rem;
+    color: var(--muted);
+    margin: 0.6rem 0 0;
+    padding: 0.5rem 0.75rem;
+    background: #f1f0eb;
+    border-radius: 8px;
+  }
+  .reader-tip kbd {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 0.05rem 0.35rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+  }
   .error {
     color: #b91c1c;
     font-size: 0.85rem;
@@ -105,6 +121,7 @@
 <header>
   <h1>Mitt nyhetsflöde</h1>
   <div class="filters" id="filters"></div>
+  <div class="reader-tip" id="reader-tip"></div>
   <div id="errors"></div>
 </header>
 
@@ -194,7 +211,23 @@
     }
   }
 
+  function renderReaderTip() {
+    const ua = navigator.userAgent;
+    const isSafari = /^((?!chrome|android).)*safari/i.test(ua);
+    const isFirefox = /firefox/i.test(ua);
+    const tip = document.getElementById('reader-tip');
+
+    if (isSafari) {
+      tip.innerHTML = '📖 Tips: när du öppnat en artikel, tryck <kbd>⇧</kbd> <kbd>⌘</kbd> <kbd>R</kbd> för Safaris läsläge – slipper annonser och rörig layout.';
+    } else if (isFirefox) {
+      tip.innerHTML = '📖 Tips: när du öppnat en artikel, klicka bok-ikonen i adressfältet för Firefox läsvy – slipper annonser och rörig layout.';
+    } else {
+      tip.innerHTML = '📖 Tips: många webbläsare har ett inbyggt läsläge (leta efter en ikon i adressfältet) som tar bort annonser när du öppnat en artikel.';
+    }
+  }
+
   renderFilters();
+  renderReaderTip();
   load();
 </script>
 
